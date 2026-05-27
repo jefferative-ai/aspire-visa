@@ -13,6 +13,7 @@ function getWritableSqlitePath(rawUrl: string) {
     if (!fs.existsSync(tempPath)) {
       fs.mkdirSync(path.dirname(tempPath), { recursive: true });
       fs.copyFileSync(localPath, tempPath);
+      fs.chmodSync(tempPath, 0o666);
     }
     return tempPath;
   }
