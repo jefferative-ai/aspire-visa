@@ -19,15 +19,15 @@ function getWritableSqlitePath(rawUrl: string) {
   if (isVercelRuntime && !process.env.DATABASE_URL) {
     const tempDir = path.join("/tmp", "prisma");
     const tempPath = path.join(tempDir, "aspire-visa-pro.db");
-    if (!fs.existsSync(tempPath)) {
+
+    try {
       fs.mkdirSync(tempDir, { recursive: true });
       fs.copyFileSync(localPath, tempPath);
-    }
-    try {
       fs.chmodSync(tempPath, 0o666);
-    } catch {
-      // ignore chmod failures in restricted environments
+    } catch (error) {
+      console.error("[db] Failed to prepare temp SQLite file:", error);
     }
+
     return tempPath;
   }
 
