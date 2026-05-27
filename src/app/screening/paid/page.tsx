@@ -32,7 +32,9 @@ function PaidIntroScreen({ onBegin }: { onBegin: () => void }) {
           </span>
           <span className="text-[var(--border)]">—</span>
           <span className="flex items-center gap-1.5 text-[var(--text-1)]">
-            <span className="w-5 h-5 rounded-full bg-[var(--accent)] text-[var(--accent-fg)] text-[10px] font-bold flex items-center justify-center">2</span>
+            <span className="w-5 h-5 rounded-full bg-[var(--accent)] flex items-center justify-center">
+              <span className="w-2 h-2 rounded-full bg-[var(--accent-fg)]" />
+            </span>
             Detailed Assessment
           </span>
         </div>
@@ -51,7 +53,7 @@ function PaidIntroScreen({ onBegin }: { onBegin: () => void }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
           {PAID_SECTIONS.map((section) => (
             <div
               key={section.id}

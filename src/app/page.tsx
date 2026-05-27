@@ -51,12 +51,6 @@ export default function LandingPage() {
             >
               Start Free Screening
             </Link>
-            <Link
-              href="/login"
-              className="inline-flex items-center justify-center h-14 px-9 bg-[var(--surface)] text-[var(--text-1)] font-semibold text-base rounded-2xl border border-[var(--border)] hover:border-[var(--text-2)] hover:bg-[var(--surface-hover)] transition-colors"
-            >
-              Sign In
-            </Link>
           </div>
 
           <p className="mt-6 text-sm text-[var(--text-3)]">
@@ -69,22 +63,22 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-5">
             {[
               {
-                icon: "✦",
+                icon: "📋",
                 title: "Free 15-min screening",
                 description:
                   "Answer structured questions about your profile. No account needed. Takes about 15 minutes.",
               },
               {
-                icon: "◈",
+                icon: "📄",
                 title: "Detailed eligibility report",
                 description:
                   "Our screening engine cross-references your answers against Nordic visa requirements to produce a structured, personalised eligibility report.",
               },
               {
-                icon: "◎",
+                icon: "🎯",
                 title: "Honest guidance",
                 description:
-                  "We tell you what the embassies look for - hard blocks, risk flags, missing documents, and actionable improvement steps.",
+                  "We tell you what the embassies look for — hard blocks, risk flags, missing documents, and actionable improvement steps.",
               },
             ].map((card) => (
               <div

@@ -68,12 +68,16 @@ export default function PaymentPage({
       <main className="flex-1 max-w-lg mx-auto w-full px-6 py-14 flex flex-col gap-8">
         {/* Header */}
         <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-success/10 border border-success/30 text-[var(--success)] text-xs font-semibold mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)]" />
+            Beta — Free Access
+          </div>
           <h1 className="text-3xl font-bold text-[var(--text-1)] mb-2">
             Unlock Your Full Report
           </h1>
-          <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-extrabold text-[var(--text-1)]">$7</span>
-            <span className="text-[var(--text-2)] text-sm">one-time</span>
+          <div className="flex items-baseline gap-3">
+            <span className="text-5xl font-extrabold text-[var(--text-1)]">Free</span>
+            <span className="text-[var(--text-2)] text-sm line-through">$7 at launch</span>
           </div>
         </div>
 
@@ -108,22 +112,21 @@ export default function PaymentPage({
           </ul>
         </div>
 
-        {/* Payment section */}
+        {/* Beta access note */}
         <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6">
           <h2 className="text-sm font-semibold text-[var(--text-2)] uppercase tracking-widest mb-3">
-            Payment
+            Beta Access
           </h2>
           <div className="bg-[var(--bg)] border border-[var(--border)] rounded-xl p-4 text-sm text-[var(--text-2)] leading-relaxed">
             <p className="font-medium text-[var(--text-1)] mb-1">
-              Local Nigerian PSP - coming soon
+              No payment required during beta
             </p>
             <p>
-              We are integrating a local payment provider (Paystack / Flutterwave)
-              to make payments seamless for Nigerian applicants. For early access
-              during beta, you can continue for free.
+              We are integrating Paystack and Flutterwave for Nigerian applicants.
+              During beta, full access is free. The report will be priced at $7 at launch.
             </p>
             <p className="mt-2">
-              Questions? Email us at{" "}
+              Questions? Email{" "}
               <a
                 href="mailto:hello@aspirevisapro.com"
                 className="underline underline-offset-2 hover:opacity-70"
@@ -187,12 +190,11 @@ export default function PaymentPage({
               : "bg-[var(--accent)] text-[var(--accent-fg)] hover:bg-[var(--accent-hover)]"
           )}
         >
-          {loading ? "Processing…" : "Continue for Free (Beta)"}
+          {loading ? "Processing…" : "Get Full Report →"}
         </button>
 
         <p className="text-xs text-center text-[var(--text-3)]">
-          During beta, the full report is free. Payment will be required
-          at launch.
+          Free during beta. $7 at launch. No subscription, ever.
         </p>
       </main>
     </div>

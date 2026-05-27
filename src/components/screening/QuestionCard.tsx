@@ -365,8 +365,6 @@ export function QuestionCard({
     if (canAdvanceRef.current) onNext();
   }, [onNext]);
 
-  const qNum = String(questionNumber).padStart(2, "0");
-
   return (
     /*
      * Layout: top-padding reserves space for the fixed ProgressBar header
@@ -403,20 +401,21 @@ export function QuestionCard({
         {/* Question text */}
         <h2 className="text-[clamp(24px,4.5vw,36px)] font-bold text-[var(--text-1)] leading-tight mb-3">
           {question.question}
-          {question.required && (
-            <span className="text-[var(--danger)] ml-1 text-xl leading-none align-super">
-              *
-            </span>
-          )}
         </h2>
 
-        {/* Subtitle */}
-        {question.subtitle && (
+        {/* Subtitle / optional tag */}
+        {question.subtitle ? (
           <p className="text-[var(--text-2)] text-[15px] mb-7 leading-relaxed max-w-lg">
             {question.subtitle}
+            {!question.required && (
+              <span className="ml-2 text-xs font-medium text-[var(--text-3)]">(optional)</span>
+            )}
           </p>
+        ) : !question.required ? (
+          <p className="text-[var(--text-3)] text-sm mb-7">(optional)</p>
+        ) : (
+          <div className="mb-7" />
         )}
-        {!question.subtitle && <div className="mb-7" />}
 
         {/* Note */}
         {question.note && (
@@ -499,7 +498,7 @@ export function QuestionCard({
                     : "bg-[var(--border)] text-[var(--text-3)] border-[var(--border)] cursor-not-allowed"
                 )}
               >
-                OK
+                Next →
               </button>
               {/* Hidden on mobile - no physical Enter key on touch keyboards */}
               <span className="hidden sm:flex items-center gap-1.5 text-sm text-[var(--text-3)]">

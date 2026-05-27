@@ -67,32 +67,35 @@ export default async function PreviewPage({
       <main className="flex-1 max-w-2xl mx-auto w-full px-6 py-14 flex flex-col gap-10">
         {/* Header */}
         <div>
-          <p className="text-sm font-medium text-[var(--text-3)] uppercase tracking-widest mb-3">
-            Based on your answers…
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--text-3)] mb-3">
+            Based on your answers
           </p>
           <h1 className="text-3xl md:text-4xl font-bold text-[var(--text-1)] leading-tight">
-            Here is your initial eligibility snapshot.
+            Here's your eligibility snapshot.
           </h1>
-          <p className="mt-3 text-[var(--text-2)]">
+          <p className="mt-3 text-[var(--text-2)] leading-relaxed">
             This is a high-level preview. Unlock the full report for a complete
             assessment with specific documents, risk flags, and improvement steps.
           </p>
         </div>
 
-        {/* Suggested visa tracks */}
+        {/* Suggested visa tracks — the reveal moment */}
         {preview?.suggested_tracks && preview.suggested_tracks.length > 0 && (
-          <section className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6">
-            <h2 className="text-base font-semibold text-[var(--text-1)] mb-4">
-              Suggested visa tracks
-            </h2>
-            <div className="flex flex-wrap gap-2.5">
-              {preview.suggested_tracks.map((track) => (
-                <span
+          <section>
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--text-3)] mb-4">
+              Your best-fit visa tracks
+            </p>
+            <div className="flex flex-col gap-3">
+              {preview.suggested_tracks.map((track, i) => (
+                <div
                   key={track}
-                  className="px-4 py-2 bg-[var(--bg)] border border-[var(--border)] rounded-full text-sm font-medium text-[var(--text-1)]"
+                  className="flex items-center gap-4 bg-[var(--surface)] border border-[var(--border)] rounded-2xl px-5 py-4"
                 >
-                  {track}
-                </span>
+                  <span className="w-7 h-7 flex-shrink-0 rounded-full bg-[var(--accent)] text-[var(--accent-fg)] text-xs font-bold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                  <span className="text-base font-semibold text-[var(--text-1)]">{track}</span>
+                </div>
               ))}
             </div>
           </section>
