@@ -1,16 +1,29 @@
+import fs from "fs";
+import path from "path";
 import { PrismaClient } from "@/generated/prisma";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import path from "path";
+
+function getWritableSqlitePath(rawUrl: string) {
+  const relativePath = rawUrl.startsWith("file:") ? rawUrl.slice("file:".length) : rawUrl;
+  const isAbsolutePath = path.isAbsolute(relativePath);
+  const localPath = isAbsolutePath ? relativePath : path.join(process.cwd(), relativePath);
+
+  if (process.env.VERCEL && !process.env.DATABASE_URL) {
+    const tempPath = path.join("/tmp", "aspire-visa-pro.db");
+    if (!fs.existsSync(tempPath)) {
+      fs.mkdirSync(path.dirname(tempPath), { recursive: true });
+      fs.copyFileSync(localPath, tempPath);
+    }
+    return tempPath;
+  }
+
+  return localPath;
+}
 
 function createPrismaClient() {
   const rawUrl = process.env.DATABASE_URL ?? "file:./prisma/dev.db";
-  // Strip the "file:" prefix if present, then resolve to absolute path
-  const relativePath = rawUrl.startsWith("file:")
-    ? rawUrl.slice("file:".length)
-    : rawUrl;
-  const dbPath = path.isAbsolute(relativePath)
-    ? relativePath
-    : path.join(process.cwd(), relativePath);
+  const dbPath = getWritableSqlitePath(rawUrl);
+
   const adapter = new PrismaBetterSqlite3({ url: dbPath });
   return new PrismaClient({
     adapter,
