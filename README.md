@@ -41,9 +41,22 @@ This project is compatible with Vercel's Next.js platform.
    - `ANTHROPIC_API_KEY`
    - `JWT_SECRET`
    - `NEXT_PUBLIC_APP_URL`
-   - `DATABASE_URL` (recommended: external PostgreSQL/MySQL database; SQLite is not persistent on Vercel serverless runtime)
-   - `ACCESS_CODE` (optional: when set, visitors must enter this code before they can access the site)
+   - `DATABASE_PROVIDER` = `postgresql`
+   - `DATABASE_URL` = your Supabase / Postgres connection string
+   - `ACCESS_CODE` (optional, only if you want the site gated by the access code)
 4. Deploy the project. Vercel will use `npm run build` and the Next.js framework automatically.
+
+### Recommended database setup
+
+For testing on Vercel, use a hosted Postgres database such as Supabase. In Supabase:
+
+- Create a new project
+- Copy the `DATABASE_URL` connection string
+- Set `DATABASE_PROVIDER=postgresql` and `DATABASE_URL` in Vercel
+
+This avoids SQLite write restrictions on Vercel and makes your screening flow work reliably.
+
+If you want to keep local SQLite development, keep `DATABASE_PROVIDER=sqlite` in your local `.env` file.
 
 ### Important database note
 
