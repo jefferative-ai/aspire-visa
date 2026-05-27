@@ -5,15 +5,28 @@ import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 
 function getWritableSqlitePath(rawUrl: string) {
   const relativePath = rawUrl.startsWith("file:") ? rawUrl.slice("file:".length) : rawUrl;
-  const isAbsolutePath = path.isAbsolute(relativePath);
-  const localPath = isAbsolutePath ? relativePath : path.join(process.cwd(), relativePath);
+  const localPath = path.isAbsolute(relativePath)
+    ? relativePath
+    : path.join(process.cwd(), relativePath);
 
-  if (process.env.VERCEL && !process.env.DATABASE_URL) {
-    const tempPath = path.join("/tmp", "aspire-visa-pro.db");
+  const isVercelRuntime = Boolean(
+    process.env.VERCEL ||
+    process.env.VERCEL_ENV ||
+    process.env.NOW_REGION ||
+    process.env.VERCEL_URL
+  );
+
+  if (isVercelRuntime && !process.env.DATABASE_URL) {
+    const tempDir = path.join("/tmp", "prisma");
+    const tempPath = path.join(tempDir, "aspire-visa-pro.db");
     if (!fs.existsSync(tempPath)) {
-      fs.mkdirSync(path.dirname(tempPath), { recursive: true });
+      fs.mkdirSync(tempDir, { recursive: true });
       fs.copyFileSync(localPath, tempPath);
+    }
+    try {
       fs.chmodSync(tempPath, 0o666);
+    } catch {
+      // ignore chmod failures in restricted environments
     }
     return tempPath;
   }
