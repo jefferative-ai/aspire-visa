@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  screenings Screening[]
+}
+
+model Screening {
+  id            String    @id @default(cuid())
+  userId        String?
+  email         String
+  phase         String    @default("FREE")
+  status        String    @default("IN_PROGRESS")
+  freeAnswers   String?
+  paidAnswers   String?
+  freePreview   String?
+  report        String?
+  paymentStatus String    @default("PENDING")
+  consentAt     DateTime?
+  expiresAt     DateTime
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model OtpCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
