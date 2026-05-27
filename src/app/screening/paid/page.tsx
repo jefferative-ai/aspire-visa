@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, Suspense } from "react";
+import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ScreeningShell } from "@/components/screening/ScreeningShell";
 import { getVisiblePaidQuestions, PAID_SECTIONS } from "@/lib/questions";
@@ -8,16 +8,92 @@ import type { ScreeningAnswers } from "@/lib/questions/types";
 
 const STORAGE_KEY = "avp_paid_answers";
 
+const SECTION_ICONS: Record<string, string> = {
+  B1: "🪪",
+  B2: "💳",
+  B3: "🎓",
+  B4: "💼",
+  B5: "👪",
+  B6: "✈️",
+  B7: "🏥",
+  B8: "📋",
+  B9: "✅",
+};
+
+function PaidIntroScreen({ onBegin }: { onBegin: () => void }) {
+  return (
+    <div className="min-h-dvh bg-[var(--bg)] flex flex-col">
+      <header className="flex items-center justify-between px-6 md:px-12 py-5 border-b border-[var(--border)]">
+        <span className="font-bold text-[var(--text-1)] tracking-tight text-lg">Aspire Visa Pro</span>
+        <div className="flex items-center gap-2 text-xs font-medium text-[var(--text-3)]">
+          <span className="flex items-center gap-1.5">
+            <span className="w-5 h-5 rounded-full bg-[var(--success)] text-[var(--bg)] text-[10px] font-bold flex items-center justify-center">✓</span>
+            Free Screening
+          </span>
+          <span className="text-[var(--border)]">—</span>
+          <span className="flex items-center gap-1.5 text-[var(--text-1)]">
+            <span className="w-5 h-5 rounded-full bg-[var(--accent)] text-[var(--accent-fg)] text-[10px] font-bold flex items-center justify-center">2</span>
+            Detailed Assessment
+          </span>
+        </div>
+      </header>
+
+      <main className="flex-1 max-w-2xl mx-auto w-full px-6 py-12 flex flex-col gap-8">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--text-3)] mb-3">
+            Part 2 of 2
+          </p>
+          <h1 className="text-3xl md:text-4xl font-bold text-[var(--text-1)] leading-tight mb-3">
+            Detailed Assessment
+          </h1>
+          <p className="text-[var(--text-2)] text-base leading-relaxed max-w-lg">
+            These questions let us assess your full eligibility across documents, finances, employment, and more. Takes about 10 minutes.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2.5">
+          {PAID_SECTIONS.map((section) => (
+            <div
+              key={section.id}
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-4 py-3 flex items-center gap-2.5"
+            >
+              <span className="text-base leading-none">{SECTION_ICONS[section.id]}</span>
+              <span className="text-sm font-medium text-[var(--text-2)]">{section.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={onBegin}
+          className="self-start inline-flex items-center gap-2 h-14 px-8 bg-[var(--accent)] text-[var(--accent-fg)] font-bold text-base rounded-xl hover:bg-[var(--accent-hover)] transition-colors"
+        >
+          Begin Assessment
+          <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        <p className="text-xs text-[var(--text-3)]">
+          Your answers are saved automatically. You can pause and return at any time.
+        </p>
+      </main>
+    </div>
+  );
+}
+
 function PaidScreeningContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const screeningId = searchParams.get("screeningId");
 
+  const [started, setStarted] = useState(false);
   const [answers, setAnswers] = useState<ScreeningAnswers>({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [blockMessage] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const transitioning = useRef(false);
 
   // Restore from localStorage
   useEffect(() => {
@@ -55,6 +131,9 @@ function PaidScreeningContent() {
 
   const handleNext = useCallback(async () => {
     if (blockMessage) return;
+    if (transitioning.current) return;
+    transitioning.current = true;
+    setTimeout(() => { transitioning.current = false; }, 400);
 
     if (currentIndex < visibleQuestions.length - 1) {
       setDirection(1);
@@ -116,6 +195,10 @@ function PaidScreeningContent() {
         </a>
       </div>
     );
+  }
+
+  if (!started) {
+    return <PaidIntroScreen onBegin={() => setStarted(true)} />;
   }
 
   if (submitting) {

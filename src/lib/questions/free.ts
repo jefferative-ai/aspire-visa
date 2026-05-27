@@ -14,22 +14,6 @@ export const FREE_QUESTIONS: Question[] = [
     required: true,
   },
   {
-    id: "F-A1-03",
-    section: "A1",
-    type: "number",
-    question: "How old are you?",
-    subtitle: "You must be 18 or older to use this service.",
-    placeholder: "e.g. 28",
-    storesAs: "age",
-    required: true,
-    validation: { min: 18, max: 99 },
-    hardBlockIf: (answers) => {
-      const age = Number(answers.age);
-      if (age < 18) return "You must be 18 or older to use this service.";
-      return null;
-    },
-  },
-  {
     id: "F-A1-04",
     section: "A1",
     type: "single",

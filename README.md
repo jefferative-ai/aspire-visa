@@ -42,6 +42,7 @@ This project is compatible with Vercel's Next.js platform.
    - `JWT_SECRET`
    - `NEXT_PUBLIC_APP_URL`
    - `DATABASE_URL` (recommended: external PostgreSQL/MySQL database; SQLite is not persistent on Vercel serverless runtime)
+   - `ACCESS_CODE` (optional: when set, visitors must enter this code before they can access the site)
 4. Deploy the project. Vercel will use `npm run build` and the Next.js framework automatically.
 
 ### Important database note
