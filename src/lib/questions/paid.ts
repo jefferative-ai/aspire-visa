@@ -382,7 +382,9 @@ export const PAID_QUESTIONS: Question[] = [
     placeholder: "e.g. Technology, Healthcare, Agriculture",
     storesAs: "industry",
     required: false,
-    showIf: (answers) => answers.employment_status !== "not_working",
+    showIf: (answers) =>
+      answers.employment_status === "self_employed" ||
+      answers.employment_status === "freelancer",
   },
   {
     id: "P-B4-06",
@@ -391,9 +393,6 @@ export const PAID_QUESTIONS: Question[] = [
     question: "Do you have a registered business?",
     storesAs: "has_registered_business",
     required: false,
-    showIf: (answers) =>
-      answers.employment_status === "self_employed" ||
-      answers.employment_status === "freelancer",
   },
   {
     id: "P-B4-07",
@@ -402,9 +401,6 @@ export const PAID_QUESTIONS: Question[] = [
     question: "Do you work remotely, or are you planning to?",
     storesAs: "works_remotely",
     required: false,
-    showIf: (answers) =>
-      answers.employment_status === "self_employed" ||
-      answers.employment_status === "freelancer",
   },
   {
     id: "P-B4-08",
@@ -520,21 +516,6 @@ export const PAID_QUESTIONS: Question[] = [
     showIf: (answers) => answers.partner_abroad === "yes",
   },
   {
-    id: "P-B5-07",
-    section: "B5",
-    type: "single",
-    question: "How long have you been in this relationship?",
-    storesAs: "relationship_duration",
-    required: false,
-    options: [
-      { label: "Less than 1 year", value: "under_1y" },
-      { label: "1 - 2 years", value: "1_2y" },
-      { label: "2 - 5 years", value: "2_5y" },
-      { label: "More than 5 years", value: "5y_plus" },
-    ],
-    showIf: (answers) => answers.partner_abroad === "yes",
-  },
-  {
     id: "P-B5-08",
     section: "B5",
     type: "yesno",
@@ -550,21 +531,6 @@ export const PAID_QUESTIONS: Question[] = [
     storesAs: "number_of_children",
     required: false,
     validation: { min: 1, max: 10 },
-    showIf: (answers) => answers.travelling_with_children === "yes",
-  },
-  {
-    id: "P-B5-10",
-    section: "B5",
-    type: "single",
-    question: "Do your children have valid passports?",
-    storesAs: "children_have_passports",
-    required: false,
-    options: [
-      { label: "Yes, all of them", value: "yes_all" },
-      { label: "Some of them", value: "some" },
-      { label: "No", value: "no" },
-      { label: "In progress", value: "in_progress" },
-    ],
     showIf: (answers) => answers.travelling_with_children === "yes",
   },
 
