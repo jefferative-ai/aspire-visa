@@ -8,22 +8,12 @@ import {
   View,
   StyleSheet,
   renderToBuffer,
-  Font,
 } from "@react-pdf/renderer";
 import React from "react";
 
-Font.register({
-  family: "Inter",
-  fonts: [
-    { src: "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff", fontWeight: 400 },
-    { src: "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiJ-Ek-_EeA.woff", fontWeight: 600 },
-    { src: "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYAZ9hiJ-Ek-_EeA.woff", fontWeight: 700 },
-  ],
-});
-
 const styles = StyleSheet.create({
   page: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     backgroundColor: "#FFFFFF",
     paddingTop: 48,
     paddingBottom: 64,
@@ -33,7 +23,7 @@ const styles = StyleSheet.create({
   },
   // Header
   header: { marginBottom: 32 },
-  brand: { fontSize: 11, fontWeight: 700, color: "#1A1A18", marginBottom: 4 },
+  brand: { fontSize: 11, fontWeight: "bold", color: "#1A1A18", marginBottom: 4 },
   reportLabel: { fontSize: 9, color: "#888884", marginBottom: 24 },
   divider: { borderBottomWidth: 1, borderBottomColor: "#E8E8E4", marginBottom: 24 },
 
@@ -44,19 +34,19 @@ const styles = StyleSheet.create({
   badgeText: { fontSize: 9, fontWeight: 700 },
 
   // Headline
-  headline: { fontSize: 22, fontWeight: 700, lineHeight: 1.25, marginBottom: 10, color: "#1A1A18" },
+  headline: { fontSize: 22, fontWeight: "bold", lineHeight: 1.25, marginBottom: 10, color: "#1A1A18" },
   explanation: { fontSize: 10, color: "#636360", lineHeight: 1.6, marginBottom: 6 },
   confidence: { fontSize: 9, color: "#888884", marginBottom: 32 },
 
   // Section
-  sectionTitle: { fontSize: 12, fontWeight: 700, color: "#1A1A18", marginBottom: 10 },
+  sectionTitle: { fontSize: 12, fontWeight: "bold", color: "#1A1A18", marginBottom: 10 },
   sectionBlock: { marginBottom: 28 },
 
   // Blocks
   dangerBlock: { backgroundColor: "#FEF2F2", borderWidth: 1, borderColor: "#FECACA", borderRadius: 10, padding: 14, marginBottom: 28 },
-  dangerTitle: { fontSize: 10, fontWeight: 700, color: "#EF4444", marginBottom: 8 },
+  dangerTitle: { fontSize: 10, fontWeight: "bold", color: "#EF4444", marginBottom: 8 },
   warningBlock: { backgroundColor: "#FFFBEB", borderWidth: 1, borderColor: "#FDE68A", borderRadius: 10, padding: 14, marginBottom: 28 },
-  warningTitle: { fontSize: 10, fontWeight: 700, color: "#F59E0B", marginBottom: 8 },
+  warningTitle: { fontSize: 10, fontWeight: "bold", color: "#F59E0B", marginBottom: 8 },
 
   listItem: { flexDirection: "row", gap: 8, marginBottom: 6 },
   bullet: { fontSize: 9, color: "#888884", marginTop: 1 },
@@ -66,24 +56,24 @@ const styles = StyleSheet.create({
 
   // Checklist card
   card: { backgroundColor: "#F7F7F5", borderWidth: 1, borderColor: "#E8E8E4", borderRadius: 10, padding: 16, marginBottom: 28 },
-  subLabel: { fontSize: 8, fontWeight: 600, color: "#888884", letterSpacing: 1, textTransform: "uppercase", marginBottom: 8, marginTop: 12 },
+  subLabel: { fontSize: 8, fontWeight: "bold", color: "#888884", letterSpacing: 1, textTransform: "uppercase", marginBottom: 8, marginTop: 12 },
 
   // Track card
   trackRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "#F7F7F5", borderWidth: 1, borderColor: "#E8E8E4", borderRadius: 10, padding: 12, marginBottom: 8 },
-  trackCountry: { fontSize: 10, fontWeight: 600, color: "#1A1A18" },
+  trackCountry: { fontSize: 10, fontWeight: "bold", color: "#1A1A18" },
   trackCategory: { fontSize: 9, color: "#636360", marginTop: 2 },
-  trackScore: { fontSize: 18, fontWeight: 700, color: "#1A1A18" },
+  trackScore: { fontSize: 18, fontWeight: "bold", color: "#1A1A18" },
   trackScoreSub: { fontSize: 8, color: "#888884", textAlign: "right" },
 
   // Steps
   stepRow: { flexDirection: "row", gap: 10, marginBottom: 10 },
-  stepNum: { width: 20, height: 20, borderRadius: 10, backgroundColor: "#1A1A18", color: "#FFFFFF", fontSize: 8, fontWeight: 700, textAlign: "center", paddingTop: 5 },
+  stepNum: { width: 20, height: 20, borderRadius: 10, backgroundColor: "#1A1A18", color: "#FFFFFF", fontSize: 8, fontWeight: "bold", textAlign: "center", paddingTop: 5 },
   stepText: { fontSize: 9, color: "#3D3D3A", lineHeight: 1.6, flex: 1, paddingTop: 3 },
 
   // Next actions
   nextBox: { borderWidth: 1, borderColor: "#E8E8E4", borderRadius: 8, padding: 12, marginBottom: 28 },
   nextText: { fontSize: 9, color: "#3D3D3A", lineHeight: 1.6 },
-  nextBold: { fontWeight: 600, color: "#1A1A18" },
+  nextBold: { fontWeight: "bold", color: "#1A1A18" },
 
   // Footer
   footer: { position: "absolute", bottom: 36, left: 56, right: 56 },
